@@ -7,12 +7,12 @@ export class Bullet {
     };
     maxSpeed;
     drag;
-    constructor(x,y, maxSpeed, drag){
+    constructor(x,y, maxSpeed, drag, angle){
         this.x = x;
         this.y = y;
         this.drag = drag;
         this.maxSpeed = maxSpeed;
-        this.setSpeed('x', 1, 'KeyD');
+        this.setSpeedsFromAngle(angle);
     }
     input(keys) {
        
@@ -32,5 +32,9 @@ export class Bullet {
 
     setSpeed(axis, side){
         this.speed[axis] = side * this.maxSpeed;
+    }
+    setSpeedsFromAngle(angle){
+        this.speed.y = this.maxSpeed * Math.cos(angle);
+        this.speed.x = this.maxSpeed * Math.sin(angle);
     }
 }

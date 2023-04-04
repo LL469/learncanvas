@@ -11,13 +11,15 @@ export class Player {
     maxSpeed;
     drag;
     previousBullet = new Date().getTime();
+    size = 50;
     constructor(x,y, maxSpeed, drag){
         this.x = x;
         this.y = y;
         this.drag = drag;
         this.maxSpeed = maxSpeed;
+        console.log();
     }
-    input(keys) {
+    input(keys, mouse) {
         
         if(keys.KeyA) {
             this.setSpeed(keys, 'x', -1, 'KeyA');
@@ -33,7 +35,9 @@ export class Player {
         }
         if(keys.Space){
             if(new Date().getTime() - this.previousBullet > 1000){
-                App.app.scene.add(new Bullet(this.x,this.y,300, 0));
+                let angle = this.getAngle(this.x+(this.size/2),this.y+(this.size/2), mouse.x,mouse.y);
+                console.log(this.rad2deg(angle));
+                App.app.scene.add(new Bullet(this.x+(this.size/2),this.y+(this.size/2),300, 0, Math.PI));
                 this.previousBullet = new Date().getTime();
             }
         }
@@ -59,10 +63,10 @@ export class Player {
     }
     draw(ctx){
         ctx.fillStyle = 'red';
-        ctx.fillRect(Math.floor(this.x), Math.floor(this.y), 50, 50);
+        ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.size, this.size);
     }
     clear(ctx){
-        ctx.clearRect(Math.floor(this.x), Math.floor(this.y), 50, 50);
+        ctx.clearRect(Math.floor(this.x), Math.floor(this.y), this.size, this.size);
     }
 
 
@@ -81,5 +85,15 @@ export class Player {
                 this.speed[otherAxis] = -1 * Math.sqrt(this.maxSpeed*this.maxSpeed/2);
             }
         }
+    }
+
+    getAngle(x1,y1,x2,y2){
+        let a = x1 - x2;
+        let b = y1 - y2;
+        return Math.atan(a/b);
+    }
+
+    rad2deg(rad){
+        return rad * 180 / Math.PI;
     }
 }

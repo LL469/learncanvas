@@ -30,7 +30,7 @@ export class App {
         
         const delta = timestamp - this.previous;
         this.scene.clear(this.ctx);
-        this.scene.input(this.inputManager.keys);
+        this.scene.input(this.inputManager.keys, this.inputManager.mouse);
         this.scene.update(delta);
         this.scene.draw(this.ctx);
         

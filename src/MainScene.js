@@ -4,9 +4,9 @@ export class MainScene {
 
     }
 
-    input(keys){
+    input(keys, mouse){
         this.entities.forEach(entity => {
-            entity.input(keys);
+            entity.input(keys, mouse);
         });
     }
 
