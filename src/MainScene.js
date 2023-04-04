@@ -4,6 +4,12 @@ export class MainScene {
 
     }
 
+    input(keys){
+        this.entities.forEach(entity => {
+            entity.input(keys);
+        });
+    }
+
     update(delta){
         this.entities.forEach(entity => {
             entity.update(delta);
