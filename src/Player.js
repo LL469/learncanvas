@@ -37,7 +37,7 @@ export class Player {
             if(new Date().getTime() - this.previousBullet > 1000){
                 let angle = this.getAngle(this.x+(this.size/2),this.y+(this.size/2), mouse.x,mouse.y);
                 console.log(this.rad2deg(angle));
-                App.app.scene.add(new Bullet(this.x+(this.size/2),this.y+(this.size/2),300, 0, Math.PI));
+                App.app.scene.add(new Bullet(this.x+(this.size/2),this.y+(this.size/2),300, 0, angle));
                 this.previousBullet = new Date().getTime();
             }
         }
@@ -89,8 +89,14 @@ export class Player {
 
     getAngle(x1,y1,x2,y2){
         let a = x1 - x2;
-        let b = y1 - y2;
-        return Math.atan(a/b);
+        let b = -1 *(y1 - y2);
+        let rads = Math.atan2(a, b);
+        if (rads < 0) {
+            rads = Math.abs(rads);
+        } else {
+            rads = 2 * Math.PI - rads;
+        }
+        return rads;
     }
 
     rad2deg(rad){
