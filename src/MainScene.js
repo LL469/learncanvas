@@ -1,34 +1,15 @@
-export class MainScene {
-    entities = [];
-    constructor(){
-
+import { Scene } from "phaser";
+import atlas from './assets/0x72_DungeonTilesetII_v1.4.png';
+import atlasJSON from './assets/atlas.json';
+import { Player } from "./Player";
+export class MainScene extends Scene {
+      
+    preload() {
+        this.load.atlas('atlas', atlas, atlasJSON);
     }
-
-    input(keys, mouse){
-        this.entities.forEach(entity => {
-            entity.input(keys, mouse);
-        });
+    
+    create() {
+        this.add.existing(new Player(this, 100, 100));
     }
-
-    update(delta){
-        this.entities.forEach(entity => {
-            entity.update(delta);
-        });
-    }
-
-    draw(ctx){
-        this.entities.forEach(entity => {
-            entity.draw(ctx);
-        });
-    }
-
-    clear(ctx){
-        this.entities.forEach(entity => {
-            entity.clear(ctx);
-        });
-    }
-
-    add(entity) {
-        this.entities.push(entity);
-    }
+    
 }
