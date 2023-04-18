@@ -5,16 +5,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 let text = fs.readFileSync(path.join(__dirname,'../src/assets/tiles_list_v1.4')).toString();
 let lines = text.split('\n').filter(line => line.trim() !== '');
-let frames = lines.map(line => {
+let frames = [];
+lines.forEach(line => {
     let parts = line.split(' ');
-    return {
-        filename: parts[0],
-        frame: {x:parts[1],y:parts[2],w:parts[3],h:parts[4]},
-        rotated: false,
-        trimmed: false,
-        spriteSourceSize: {x:0,y:0,w:parts[3],h:parts[4]},
-        sourceSize: {w:parts[3],h:parts[4]},
-        pivot: {x:0.5,y:0.5}
+    let len = parts[5] ? parseInt(parts[5]) : 1;
+    for(let i = 0; i<len; i++){
+        frames.push({
+            filename: parts[5] ? parts[0] + '_' + i : parts[0],
+            frame: {x:parseInt(parts[1])+parseInt(parts[3])*i,y:parts[2],w:parts[3],h:parts[4]},
+            rotated: false,
+            trimmed: false,
+            spriteSourceSize: {x:0,y:0,w:parts[3],h:parts[4]},
+            sourceSize: {w:parts[3],h:parts[4]},
+            pivot: {x:0.5,y:0.5}
+        });
     }
 });
 
@@ -31,4 +35,4 @@ let object = {
     }
 };
 let json = JSON.stringify(object);
-fs.writeFileSync('atlas.json', json);
+fs.writeFileSync(path.join(__dirname,'../src/assets/atlas.json'), json);

@@ -17,7 +17,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            
+            debug: true
         }
     },
     scene: new MainScene()
