@@ -1,28 +1,20 @@
-import { GameObjects } from "phaser";
+import * as Phaser from "phaser";
 
-export class Bullet extends GameObjects.Sprite {
-    x;
-    y;
-    speed = {
-        x: 0,
-        y: 0,
-    };
-    maxSpeed;
-    drag;
-    constructor(scene, x,y, maxSpeed, drag, angle){
+export class Bullet extends Phaser.Physics.Arcade.Sprite {
+
+    constructor(scene,x,y, target){
         super(scene, x, y);
+        scene.physics.add.existing(this);
         this.setTexture('atlas', 'weapon_arrow');
         this.setScale(4);
-        this.x = x; 
-        this.y = y;
-        this.drag = drag;
-        this.maxSpeed = maxSpeed;
-        this.target = new Phaser.Math.Vector2();
-        this.target.x = 100;
-        this.target.y = 200;
-        game.physics.arcade.enable(player);
-
-        scene.physics.moveToObject(this, this.target, 200);
+        this.body.setMaxSpeed(800);
+        this.body.useDamping = true;
+        //this.body.setDrag(0.5, 0.5);
+        console.log(Phaser.Math.Angle.BetweenPoints(this, target));
+        this.rotation = Phaser.Math.Angle.BetweenPoints(this, target)+Math.PI/2;
+        
+ 
+        scene.physics.moveToObject(this, target, 800);
     }
 
     // preUpdate(time,delta){

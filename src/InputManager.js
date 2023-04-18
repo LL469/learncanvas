@@ -6,10 +6,10 @@ export class InputManager {
         this.keys['KeyD'] = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keys['KeyS'] = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keys['Space'] = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        scene.input.on('pointermove', function (pointer)
+        {
+            this.mouse = pointer;
+        }, this);
     }
    
-    mousemove = (evt) => {
-        this.mouse.x = evt.clientX;
-        this.mouse.y = evt.clientY;
-    }
 }
