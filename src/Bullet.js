@@ -1,4 +1,5 @@
 import * as Phaser from "phaser";
+import { MainScene } from "./MainScene";
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
 
@@ -6,6 +7,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y);
         scene.physics.add.existing(this);
         this.setTexture('atlas', 'weapon_arrow');
+
+        this.body.setOffset(-5, 3);
+        this.body.setSize(16, 16, false);
+
         this.setScale(4);
         this.body.setMaxSpeed(800);
         this.body.useDamping = true;
@@ -15,22 +20,17 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
         
  
         scene.physics.moveToObject(this, target, 800);
+        this.setData("flying", true);
 
-
+        this.on('changedata-flying', (gameObject, value, previousValue) => {
+            if(value == false){
+                this.setVelocity(0, 0);
+                scene.physics.world.removeCollider(this.getData("collider"));
+            }
+            
+        });
     }
 
-    // preUpdate(time,delta){
-    //     this.x += this.speed.x/1000*delta;
-    //     this.y += this.speed.y/1000*delta;
-    // }
 
-
-
-    // setSpeed(axis, side){
-    //     this.speed[axis] = side * this.maxSpeed;
-    // }
-    // setSpeedsFromAngle(angle){
-    //     this.speed.y = this.maxSpeed * Math.cos(angle);
-    //     this.speed.x = this.maxSpeed * Math.sin(angle);
-    // }
+    
 }
