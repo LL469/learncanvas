@@ -6,6 +6,7 @@ export class Player extends Physics.Arcade.Sprite {
     input;
     shootInterval = 500;
     lastShotTime = 0;
+    arrowAmount = 10;
     constructor(scene, x, y){
         super(scene, x, y, 'atlas', 'elf_m_idle_anim_0');
         scene.physics.add.existing(this);

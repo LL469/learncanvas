@@ -3,6 +3,7 @@ import atlas from './assets/0x72_DungeonTilesetII_v1.4.png';
 import atlasJSON from './assets/atlas.json';
 import mapJSON from './assets/map.json';
 import { Player } from "./Player";
+import { Bullet } from "./Bullet";
 export class MainScene extends Scene {
       
     preload() {
@@ -22,7 +23,17 @@ export class MainScene extends Scene {
         const edges = map.createLayer(2, tiles, 0, 0);
         edges.setScale(4);
         this.physics.add.collider(player, floor);
-        
+
+        function arrowCollideCallBack(bullet, object) {
+            console.log(object);
+        }
+
+
+        this.events.on('addedtoscene', (object) => {
+            if(object instanceof Bullet) {
+                this.physics.add.collider(object, floor, arrowCollideCallBack)
+            }
+        });
     }
-    
+
 }
